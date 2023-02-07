@@ -3,7 +3,8 @@
 Build Tools Visual Studio 2017:  
 ![Build Tools](images_readme/image_2023-02-07_16-37-10.png)  
 Нужные библиотеки:  
-![Libs](images_readme/image_2023-02-07_16-37-29.png) ***  
+![Libs](images_readme/image_2023-02-07_16-37-29.png)  
+***
 ![Libs](images_readme/image_2023-02-07_16-37-39.png)  
 По итогу получился такой набор:  
 ![Libs](images_readme/image_2023-02-07_16-39-10.png)  
