@@ -1,0 +1,23 @@
+﻿Build started 07/02/23 16:43:42.
+Logging verbosity is set to: Normal.     1>Project "C:\University\4_сем\ОКГ\Lab01\Win32Project1\Win32Project1\Win32Project1.vcxproj" on node 2 (Build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\Win32Project1.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\CL.exe /c /ZI /JMC /nologo /W3 /WX- /diagnostics:classic /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /D _AFXDLL /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc141.pdb" /Gd /TP /analyze- /FC /errorReport:prompt L1.cpp
+         L1.cpp
+         _WIN32_WINNT not defined. Defaulting to _WIN32_WINNT_MAXVER (see WinSDKVer.h)
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.16.27023\bin\HostX86\x86\link.exe /ERRORREPORT:PROMPT /OUT:"C:\University\4_сем\ОКГ\Lab01\Win32Project1\Debug\Win32Project1.exe" /INCREMENTAL /NOLOGO /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.16.27023\Include\Manifest\dpiaware.manifest" /DEBUG:FASTLINK /PDB:"C:\University\4_сем\ОКГ\Lab01\Win32Project1\Debug\Win32Project1.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\University\4_сем\ОКГ\Lab01\Win32Project1\Debug\Win32Project1.lib" /MACHINE:X86 Debug\CMatrix.obj
+         Debug\L1.obj
+         Debug\LibGraph.obj
+         Win32Project1.vcxproj -> C:\University\4_сем\ОКГ\Lab01\Win32Project1\Debug\Win32Project1.exe
+       FinalizeBuildStatus:
+         Deleting file "Debug\Win32Project1.tlog\unsuccessfulbuild".
+         Touching "Debug\Win32Project1.tlog\Win32Project1.lastbuildstate".
+     1>Done Building Project "C:\University\4_сем\ОКГ\Lab01\Win32Project1\Win32Project1\Win32Project1.vcxproj" (Build target(s)).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.76
