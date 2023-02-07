@@ -9,5 +9,8 @@ Build Tools Visual Studio 2017:
 ***
 ![Libs](images_readme/image_2023-02-07_16-37-39.png)  
 ***
+А также другая версия пакетa SDK:  
+![Libs](images_readme/image_2023-02-07_17-30-11.png)  
+*** 
 По итогу получился такой набор:  
 ![Libs](images_readme/image_2023-02-07_16-39-10.png)  
