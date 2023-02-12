@@ -81,7 +81,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CMatrix.cpp" />
-    <ClCompile Include="L1.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="LibGraph.cpp" />
   </ItemGroup>
   <ItemGroup>
