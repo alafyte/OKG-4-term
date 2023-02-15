@@ -9,7 +9,7 @@ void PrintMatrix(CDC& dc, int x, int y, CMatrix& M)
 		for (int j = 0; j < M.cols(); j++)
 		{
 			char buff[32];
-			sprintf_s(buff, " %3.2f ", M(i, j));//преобразование дробного числа в строку
+			sprintf_s(buff, " %3.2f ", M(i, j));
 			dc.TextOutW(x, y, buff);
 			x += 60;
 		}
