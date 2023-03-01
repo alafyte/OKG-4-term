@@ -1,0 +1,28 @@
+﻿Build started 01/03/2023 14:54:03.
+Logging verbosity is set to: Normal.     1>Project "C:\University\4_term\ОКГ\Lab02\Lab02\Lab02.vcxproj" on node 2 (Build target(s)).
+     1>InitializeBuildStatus:
+         Creating "x64\Debug\Lab02.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\bin\HostX86\x64\CL.exe /c /ZI /JMC /nologo /W3 /WX- /diagnostics:column /sdl /Od /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /D _AFXDLL /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc142.pdb" /external:W3 /Gd /TP /FC /errorReport:prompt MainFrm.cpp
+         MainFrm.cpp
+         _WIN32_WINNT not defined. Defaulting to _WIN32_WINNT_MAXVER (see WinSDKVer.h)
+       ResourceCompile:
+         All outputs are up-to-date.
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\bin\HostX86\x64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\University\4_term\ОКГ\Lab02\x64\Debug\Lab02.exe" /INCREMENTAL /ILK:"x64\Debug\Lab02.ilk" /NOLOGO /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\Include\Manifest\dpiaware.manifest" /DEBUG:FULL /PDB:"C:\University\4_term\ОКГ\Lab02\x64\Debug\Lab02.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\University\4_term\ОКГ\Lab02\x64\Debug\Lab02.lib" /MACHINE:X64 x64\Debug\lab2.res
+         x64\Debug\ChildView.obj
+         x64\Debug\CMatrix.obj
+         x64\Debug\Lab02.obj
+         x64\Debug\LibChart2D.obj
+         x64\Debug\MainFrm.obj
+         Lab02.vcxproj -> C:\University\4_term\ОКГ\Lab02\x64\Debug\Lab02.exe
+       FinalizeBuildStatus:
+         Deleting file "x64\Debug\Lab02.tlog\unsuccessfulbuild".
+         Touching "x64\Debug\Lab02.tlog\Lab02.lastbuildstate".
+     1>Done Building Project "C:\University\4_term\ОКГ\Lab02\Lab02\Lab02.vcxproj" (Build target(s)).
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:03.82
