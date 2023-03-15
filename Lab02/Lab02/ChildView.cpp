@@ -51,7 +51,7 @@ void CChildView::OnPaint()
 	CPaintDC dc(this); // контекст устройства для рисования
 	if (Index == 1)
 	{
-		Graph.Draw(dc, 1, 1);
+		Graph.Draw(dc, 0, 1);
 	}
 
 	if (Index == 2)
@@ -71,7 +71,7 @@ double CChildView::MyF1(double x)
 
 double CChildView::MyF2(double x)
 {
-	double y = pow(x, 3);
+	double y = sqrt(x)* sin(x);
 	return y;
 }
 
@@ -100,9 +100,11 @@ void CChildView::OnTestsF1()	// MM_TEXT
 
 void CChildView::OnTestsF2()
 {
-	double xL = -5;
-	double xH = -xL;
-	double dx = 0.25;
+	Invalidate();
+	CPaintDC dc(this);
+	double xL = 0;
+	double xH = 6 * pi;
+	double dx = pi / 36;
 	int N = (xH - xL) / dx;
 	X.RedimMatrix(N + 1);
 	Y.RedimMatrix(N + 1);
@@ -114,11 +116,10 @@ void CChildView::OnTestsF2()
 	PenLine.Set(PS_DASH, 3, RGB(255, 0, 0));
 	PenAxis.Set(PS_SOLID, 2, RGB(0, 0, 0));
 	RW.SetRect(200, 200, 600, 600);
-	Graph.SetParams(X, Y, RW);
+	Graph.SetParams(X - 0.01, Y, RW);
 	Graph.SetPenLine(PenLine);
 	Graph.SetPenAxis(PenAxis);
-	Index = 2;
-	this->Invalidate();
+	Graph.Draw(dc, 0, 1);
 }
 
 void CChildView::OnTestsF12()
@@ -142,11 +143,11 @@ void CChildView::OnTestsF12()
 	Graph.SetParams(X, Y, RW);
 	Graph.SetPenLine(PenLine);
 	Graph.SetPenAxis(PenAxis);
-	Graph.Draw(dc, 1, 1);
+	Graph.Draw(dc, 0, 1);
 
-	xL = -5;
-	xH = -xL;
-	dx = 0.25;
+	xL = 0;
+	xH = 6 * pi;
+	dx = pi / 36;
 	N = (xH - xL) / dx;
 	X.RedimMatrix(N + 1);
 	Y.RedimMatrix(N + 1);
@@ -158,8 +159,8 @@ void CChildView::OnTestsF12()
 	PenLine.Set(PS_DASH, 3, RGB(255, 0, 0));
 	PenAxis.Set(PS_SOLID, 2, RGB(0, 0, 0));
 	RW.SetRect(405, 200, 805, 600);
-	Graph.SetParams(X, Y, RW);
+	Graph.SetParams(X - 0.01, Y, RW);
 	Graph.SetPenLine(PenLine);
 	Graph.SetPenAxis(PenAxis);
-	Graph.Draw(dc, 1, 1);
+	Graph.Draw(dc, 0, 1);
 }

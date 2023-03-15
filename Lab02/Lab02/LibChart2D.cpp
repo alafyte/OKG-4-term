@@ -152,23 +152,27 @@ void CPlot2D::Draw(CDC& dc, int Ind1, int Ind2)		// Рисование с самостоятельным 
 		CPen MyPen(PenAxis.PenStyle, PenAxis.PenWidth, PenAxis.PenColor);
 		CPen* pOldPen = dc.SelectObject(&MyPen);
 
-		xs = RS.left;  ys = RS.top;				// Точка (0,y_max) в МСК
-		GetWindowCoords(xs, ys, xw, yw);		// (xw,yw) -точка (0,y_max) в ОСК		
-		dc.MoveTo(xw, yw);						// Перо в точку (0,y_max)
+		if (RS.left * RS.right < 0)
+		{
+			xs =  0;  ys = RS.top;				// Точка (0,y_max) в МСК
+			GetWindowCoords(xs, ys, xw, yw);		// (xw,yw) -точка (0,y_max) в ОСК		
+			dc.MoveTo(xw, yw);						// Перо в точку (0,y_max)
 
-		xs = RS.left;  ys = RS.bottom;			// Точка (0,y_min) в МСК
-		GetWindowCoords(xs, ys, xw, yw);		// (xw,yw) -точка (0,y_min) в ОСК
-		dc.LineTo(xw, yw);						// Линия (0,y_max) - (0,y_min) - Ось Y
+			xs = 0;  ys = RS.bottom;			// Точка (0,y_min) в МСК
+			GetWindowCoords(xs, ys, xw, yw);		// (xw,yw) -точка (0,y_min) в ОСК
+			dc.LineTo(xw, yw);						// Линия (0,y_max) - (0,y_min) - Ось Y
+		}
 		
+		if (RS.top * RS.bottom < 0)
+		{
+			xs = RS.left;  ys = 0;				// (xs,ys) - точка (x_min,0) в МСК
+			GetWindowCoords(xs, ys, xw, yw);		// (xw,yw) -точка (x_min,0) в ОСК
+			dc.MoveTo(xw, yw);						// Перо в точку (x_min,0)
 
-		xs = RS.left;  ys = RS.top;				// (xs,ys) - точка (x_min,0) в МСК
-		GetWindowCoords(xs, ys, xw, yw);		// (xw,yw) -точка (x_min,0) в ОСК
-		dc.MoveTo(xw, yw);						// Перо в точку (x_min,0)
-
-		xs = RS.right;  ys = RS.top;			// (xs,ys) - точка (x_max,0) в МСК
-		GetWindowCoords(xs, ys, xw, yw);		// (xw,yw) -точка (x_max,0) в ОСК
-		dc.LineTo(xw, yw);						// Линия (x_min,0) - (x_max,0) - Ось X
-		
+			xs = RS.right;  ys = 0;			// (xs,ys) - точка (x_max,0) в МСК
+			GetWindowCoords(xs, ys, xw, yw);		// (xw,yw) -точка (x_max,0) в ОСК
+			dc.LineTo(xw, yw);						// Линия (x_min,0) - (x_max,0) - Ось X
+		}
 		dc.SelectObject(pOldPen);
 	}
 
@@ -189,42 +193,40 @@ void CPlot2D::Draw(CDC& dc, int Ind1, int Ind2)		// Рисование с самостоятельным 
 
 
 void CPlot2D::Draw1(CDC& dc, int Ind1, int Ind2)	// Рисование БЕЗ самостоятельного пересчетa координат
+
+
+	// Рисует график в режиме MM_ANISOTROPIC - без собственного пересчета координат
+	// К моменту вызова функции режим и параметры режима должны быть установлены
+	// dc - ссылка на класс CDC MFC
+	// Ind1=1/0 - рисовать/не рисовать рамку
+	// Ind2=1/0 - рисовать/не рисовать оси координат
 {
 
-	double xs, ys; // мировые координаты точки
-	int xw, yw; // оконные координаты точки
-	dc.Rectangle(RW);
-	CPen MyPen1(PenAxis.PenStyle, PenAxis.PenWidth, PenAxis.PenColor);
-	CPen* pOldPen1 = dc.SelectObject(&MyPen1);
+	CRect IRS(RS.left, RS.top, RS.right, RS.bottom);
+	if (Ind1 == 1)dc.Rectangle(IRS);           // Рамка в окне
+	if (Ind2 == 1)                     // Если нужны оси...
+	{//***
+		CPen MyPen(PenAxis.PenStyle, PenAxis.PenWidth, PenAxis.PenColor);
+		CPen* pOldPen = dc.SelectObject(&MyPen);
 
-	xs = RS.left; ys = RS.bottom;			// Точка (0,y_max) в МСК
-	GetWindowCoords(xs, ys, xw, yw);		// (xw,yw) -точка (0,y_max) в ОСК
-	dc.MoveTo(xw, yw);						// Перо в точку (0,y_max)
+		if (RS.left * RS.right < 0)          // Нужна Ось Y
+		{
+			dc.MoveTo(0, (int)RS.top);    // Перо в точку (0,Ymax)
+			dc.LineTo(0, (int)RS.bottom);  // Линия (0,Ymax) - (0,Ymin) - Ось Y
+		}
 
-	xs = RS.left; ys = RS.top;				// Точка (0,y_min) в МСК
-	GetWindowCoords(xs, ys, xw, yw);		// (xw,yw) -точка (0,y_min) в ОСК
-	dc.LineTo(xw, yw);						// Линия (0,y_max) - (0,y_min) - Ось Y
+		if (RS.top * RS.bottom < 0)          // Нужна Ось X
+		{
+			dc.MoveTo((int)RS.left, 0);        // Перо в точку (0,Xmin)
+			dc.LineTo((int)RS.right, 0);        //  Линия (0,Xmin) - (0,Xmax) - Ось X
+		}
+		dc.SelectObject(pOldPen);
+	}//***
 
-	xs = RS.right; ys = RS.top;				// (xs,ys) - точка (x_min,0) в МСК
-	GetWindowCoords(xs, ys, xw, yw);		// (xw,yw) -точка (x_min,0) в ОСК
-	dc.MoveTo(xw, yw);						// Перо в точку (x_min,0)
-
-	xs = RS.left; ys = RS.top;				// (xs,ys) - точка (x_max,0) в МСК
-	GetWindowCoords(xs, ys, xw, yw);		// (xw,yw) -точка (x_max,0) в ОСК
-	dc.LineTo(xw, yw);						// Линия (x_min,0) - (x_max,0) - Ось X
-
-	dc.SelectObject(pOldPen1);
-	xs = X(0); ys = Y(0);
-	GetWindowCoords(xs, ys, xw, yw);		// координаты начальной точки графика в ОСК
 	CPen MyPen(PenLine.PenStyle, PenLine.PenWidth, PenLine.PenColor);
 	CPen* pOldPen = dc.SelectObject(&MyPen);
-	dc.MoveTo(xw, yw);						// Перо в начальную точка для рисования графика
-	for (int i = 1; i < X.rows(); i++)
-	{
-		xs = X(i); ys = Y(i);
-		GetWindowCoords(xs, ys, xw, yw);	// координаты начальной точки графика с номером i в ОСК
-		dc.LineTo(xw, yw);
-	}
+	dc.MoveTo((int)X(0), (int)Y(0));
+	for (int i = 1; i < X.rows(); i++)  dc.LineTo((int)X(i), (int)Y(i));
 	dc.SelectObject(pOldPen);
 }
 
