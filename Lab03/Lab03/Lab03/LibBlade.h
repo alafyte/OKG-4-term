@@ -36,7 +36,7 @@ class CBlade
 	CRect SecondTop;
 	CRect FirstBootom;
 	CRect SecondBootom;
-	CRect EarthOrbit;
+	CRect WayRotation;
 	CMatrix FTCoords;
 	CMatrix STCoords;
 	CMatrix FBCoords;

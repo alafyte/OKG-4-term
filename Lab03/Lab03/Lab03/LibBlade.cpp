@@ -122,11 +122,11 @@ CBlade::CBlade()
 	SecondTop.SetRect(-5, 5, 5, -5);
 	FirstBootom.SetRect(-5, 5, 5, -5);
 	SecondBootom.SetRect(-5, 5, 5, -5);
-	EarthOrbit.SetRect(-RoE, RoE, RoE, -RoE);	
+	WayRotation.SetRect(-RoE, RoE, RoE, -RoE);	
 	fiSB = 215;
 	fiFB = 205;			
 	fiST = 25;			
-	fiFT = 35;//угл положение для FT
+	fiFT = 35;//угол положение для FT
 	wPoint = -8;
 	dt = 0.1;
 	FTCoords.RedimMatrix(3);
@@ -138,7 +138,7 @@ CBlade::CBlade()
 void CBlade::SetNewCoords()
 {
 
-	double RoV = (EarthOrbit.right - EarthOrbit.left) / 2;
+	double RoV = (WayRotation.right - WayRotation.left) / 2;
 	double ff = (fiFT / 90.0) * pi;
 	double x = RoV * cos(ff);
 	double y = RoV * sin(ff);
@@ -150,7 +150,7 @@ void CBlade::SetNewCoords()
 	CMatrix P = CreateRotate2D(fiFT);
 	FTCoords = P * FTCoords;
 
-	RoV = (EarthOrbit.right - EarthOrbit.left) / 2;
+	RoV = (WayRotation.right - WayRotation.left) / 2;
 	ff = (fiST / 90.0) * pi;
 	x = RoV * cos(ff);
 	y = RoV * sin(ff);
@@ -162,7 +162,7 @@ void CBlade::SetNewCoords()
 	P = CreateRotate2D(fiST);
 	STCoords = P * STCoords;
 
-	RoV = (EarthOrbit.right - EarthOrbit.left) / 2;
+	RoV = (WayRotation.right - WayRotation.left) / 2;
 	ff = (fiFB / 90.0) * pi;
 	x = RoV * cos(ff);
 	y = RoV * sin(ff);
@@ -174,7 +174,7 @@ void CBlade::SetNewCoords()
 	P = CreateRotate2D(fiFB);
 	FBCoords = P * FBCoords;
 
-	RoV = (EarthOrbit.right - EarthOrbit.left) / 2;
+	RoV = (WayRotation.right - WayRotation.left) / 2;
 	ff = (fiSB / 90.0) * pi;
 	x = RoV * cos(ff);
 	y = RoV * sin(ff);
