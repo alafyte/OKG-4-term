@@ -83,7 +83,7 @@ void CMainWnd::OnCplot3dFunc2()
 {
 	double dx = 0.25, dy = 0.25;
 	r = 50, fi = 30, q = 45;
-	CRectD SpaceRect(-5, 5, 5, -5);
+	CRectD SpaceRect(-1, 1, 1, -1);
 	CRect  WinRect;
 	GetClientRect(WinRect);
 	WinRect.SetRect(WinRect.left + 50, WinRect.top + 50, WinRect.right - 50, WinRect.bottom - 50);
