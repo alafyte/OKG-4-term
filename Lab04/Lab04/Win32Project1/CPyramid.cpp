@@ -70,13 +70,13 @@ void CPyramid::Draw1(CDC &dc, CMatrix&PView, CRect &RW)			// с удалением ребер
 	A1B1C1[1] = MasVert[3];
 	A1B1C1[2] = MasVert[5];
 
-	CPen Pen(PS_SOLID, 2, RGB(0, 0, 0));
-	CPen *pOldPen = dc.SelectObject(&Pen);
-	CBrush BottopBrush(RGB(34, 245, 206));				// цвет нижней грани
-	CBrush TopBrush(RGB(245, 192, 34));					// цвет верхней грани
-	CBrush BaseBrush(RGB(251, 217, 255));				// цвет остальных граней
-	CBrush *pOldBrush = dc.SelectObject(&BottopBrush);
-	dc.SelectObject(&BaseBrush);
+	//CPen Pen(PS_SOLID, 2, RGB(0, 0, 0));
+	//CPen *pOldPen = dc.SelectObject(&Pen);
+	//CBrush BottopBrush(RGB(34, 245, 206));				// цвет нижней грани
+	//CBrush TopBrush(RGB(5, 192, 34));					// цвет верхней грани
+	//CBrush BaseBrush(RGB(251, 67, 105));				// цвет остальных граней
+	//CBrush *pOldBrush = dc.SelectObject(&BottopBrush);
+	//dc.SelectObject(&BaseBrush);
 	CPoint ABB1A1[4];
 	ABB1A1[0] = ABC[0];
 	ABB1A1[1] = ABC[1];
@@ -129,17 +129,17 @@ void CPyramid::Draw1(CDC &dc, CMatrix&PView, CRect &RW)			// с удалением ребер
 
 	if (PView(2) <= 90)					// если зенит <= 90
 	{
-		dc.SelectObject(&TopBrush);
+		/*dc.SelectObject(&TopBrush);*/
 		dc.Polygon(A1B1C1, 3);				// рисуется грань A1B1C1
 	}
 	else								// если зенит > 90
 	{
-		dc.SelectObject(&BottopBrush);
+		/*dc.SelectObject(&BottopBrush);*/
 		dc.Polygon(ABC, 3);					// рисуется грань ABC
 	}
 
-	dc.SelectObject(pOldPen);
-	dc.SelectObject(pOldBrush);
+	/*dc.SelectObject(pOldPen);
+	dc.SelectObject(pOldBrush);*/
 }
 
 void CPyramid::Draw(CDC &dc, CMatrix&PView, CRect &RW)			// без удаления граней
