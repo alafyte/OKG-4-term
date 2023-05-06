@@ -13,7 +13,6 @@ public:
 	void Draw(CDC& dc, CMatrix& P, CRect& RW);
 	void Draw1(CDC& dc, CMatrix& P, CRect& RW);
 	void ColorDraw(CDC& dc, CMatrix& PView, CRect& RW, COLORREF color);
-	void DrawLightSphere(CDC& dc, double Radius, CMatrix& PView, CMatrix& PSourceLight, CRect RW, COLORREF Color, int Index);
 };
 
 CPyramid::CPyramid()
@@ -233,111 +232,6 @@ void CPyramid::ColorDraw(CDC& dc, CMatrix& PView, CRect& RW, COLORREF color)
 		//CBrush *topBrush = new CBrush(RGB(sm * 0.7 * Red, sm * 0.7*Green, sm * 0.7*Blue));
 		dc.SelectObject(topBrush);
 		dc.Polygon(MasVert + 3, 3);
-	}
-}
-
-
-
-
-void CPyramid::DrawLightSphere(CDC& dc, double Radius, CMatrix& PView, CMatrix& PSourceLight, CRect RW, COLORREF Color, int Index)
-{
-	BYTE red = GetRValue(Color);
-	BYTE green = GetGValue(Color);
-	BYTE blue = GetBValue(Color);
-	double kLight;
-	CRectD RectView;
-
-	CMatrix VR = SphereToCart(PView); //т.наблюд в декарт(VR)
-	CMatrix VS = SphereToCart(PSourceLight);//т.света в декарт
-	CMatrix MV = CreateViewCoord(PView(0), PView(1), PView(2));//М-ца -> ВСК
-	CMatrix ViewVert = MV * Vertices;
-	GetRect(ViewVert, RectView); //прям-к, охват проекцию пирамиды на XY ВСК
-	CMatrix MW = SpaceToWindow(RectView, RW); // м-ца МСК->ОСК
-
-	CPoint MasVert[6];
-	CMatrix V(3);
-	V(2) = 1;
-	for (int i = 0; i < 6; i++)	///верш в ОСК
-	{
-		V(0) = ViewVert(0, i); ///x
-		V(1) = ViewVert(1, i); ///y
-		V = MW * V;
-		MasVert[i].x = (int)V(0);
-		MasVert[i].y = (int)V(1);
-	}
-
-	CMatrix R1(3),	///тек. точка основания
-		R2(3),		///следующая т.основания
-		VN(3);		///вектор нормали
-	double sm;
-	for (int i = 0; i < 3; i++)
-	{
-		CMatrix VE = Vertices.GetCol(i + 3, 0, 2);	// вершина Е
-		int k;
-		if (i == 2) k = 0;
-		else k = i + 1;
-		R1 = Vertices.GetCol(i, 0, 2);
-		R2 = Vertices.GetCol(k, 0, 2);
-		CMatrix V1 = R2 - R1;          // Вектор – ребро в основании
-		CMatrix V2 = VE - R1;          // Вектор – ребро к вершине
-		VN = VectorMult(V2, V1);
-		sm = cosv1v2(VR, VN);	   // cos (N к грани, вект ТН)
-		double alpha = getAngleBetweenVectors(VS, VN);
-
-		if (sm >= 0) // Грань видима – рисуем боковую грань
-		{
-			CMatrix VP = VS - VR; // Напр на источник света отн нормали к т.падения
-			sm = cosv1v2(VP, VN);
-			double result = 0;
-			if (sm > 0)
-			{
-				kLight = cosv1v2(VR, VN);
-				result = pow(kLight, 5);
-			}
-			CPen Pen(PS_SOLID, 2, RGB(0, 7 * result * red, 0, 7 * result * green, 0, 7 * result * blue));	//контур
-			CPen* pOldPen = dc.SelectObject(&Pen);
-			CBrush Brus(RGB(result * red, result * green, result * blue));
-			CBrush* pOldBrush = dc.SelectObject(&Brus);
-			CPoint MasVertr[4]{ MasVert[i], MasVert[k], MasVert[k + 3],MasVert[i + 3] };
-			dc.Polygon(MasVertr, 4);	///зарисовка
-			dc.SelectObject(pOldPen);
-			dc.SelectObject(pOldBrush);
-		}
-	}
-	VN = VectorMult(R1, R2);
-	sm = cosv1v2(VN, VR);
-
-	if (sm >= 0) // Основание
-	{
-		CMatrix VP = VS - VR;
-		sm = cosv1v2(VP, VN);
-		double result = 0;
-		double UgolAlpha = getAngleBetweenVectors(VR, VN);
-		if (sm > 0)
-		{
-			kLight = cosv1v2(VN, VR);;
-			result = pow(kLight, 5);
-		}
-		if (result < 0) result = 0;
-		CBrush* topBrush = new CBrush(RGB(result * red, result * green, result * blue));
-		dc.SelectObject(topBrush);
-		dc.Polygon(MasVert, 3);	// Основание
-	}
-	else
-	{
-		CMatrix VP = VS - VR;
-		sm = cosv1v2(VP, VN);
-		double result = 0;
-		double UgolAlpha = getAngleBetweenVectors(VS, VN);
-		if (sm > 0)
-		{
-			kLight = cosv1v2(VN, VR);
-			result = pow(kLight, 5);
-		}
-		CBrush* topBrush = new CBrush(RGB(result * result * red, result * result * green, result * result * blue));
-		//CBrush *topBrush = new CBrush(RGB(sm * 0.7, sm * 0.7, sm * 0.7));
-		dc.SelectObject(topBrush);
-		dc.Polygon(MasVert + 3, 3);	// верхнее основание
 	}
 }
 
