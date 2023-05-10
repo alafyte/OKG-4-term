@@ -1,4 +1,3 @@
-
 // stdafx.h : include file for standard system include files,
 // or project specific include files that are used frequently,
 // but are changed infrequently
@@ -13,7 +12,7 @@
 #define VC_EXTRALEAN            // Exclude rarely-used stuff from Windows headers
 #endif
 
-
+#include "targetver.h"
 
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS      // some CString constructors will be explicit
 
@@ -31,17 +30,14 @@
 #include <afxdtctl.h>           // MFC support for Internet Explorer 4 Common Controls
 #endif
 #ifndef _AFX_NO_AFXCMN_SUPPORT
-#include <afxcmn.h>             // MFC support for Windows Common Controls
+#include <afxcmn.h>                     // MFC support for Windows Common Controls
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
+//---------- Заголовки для всех файлов-----------------------------
+#include <FLOAT.H> // Для  DBL_MAX , DBL_MIN
+#include <math.h>
+#include "CMatrix.h"
+#include <vector>
 
-
-
-
-
-
-
-
-
-
-
+#include "LibGraph.h"
+#include "LibSurface.h"
