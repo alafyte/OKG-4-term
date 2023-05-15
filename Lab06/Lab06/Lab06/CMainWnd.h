@@ -55,7 +55,7 @@ void CMainWnd::OnPaint()
 {
 	CPaintDC dc(this);
 	if (Index == 1)
-		PIR.ColorDraw(dc, PView, WinRect, RGB(255, 105, 180));	///коор.камеры, область в окне
+		PIR.ColorDraw(dc, PView, WinRect, RGB(203, 134, 236));	///коор.камеры, область в окне
 }
 
 void CMainWnd::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -64,14 +64,14 @@ void CMainWnd::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	{
 		switch (nChar)
 		{
-		case VK_UP:
+		case VK_DOWN:
 		{
 			double d = PView(2) - 3;
 			if (d >= 0)
 				PView(2) = d;
 			break;
 		}
-		case VK_DOWN:
+		case VK_UP:
 		{
 			double d = PView(2) + 3;
 			if (d <= 180)
