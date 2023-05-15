@@ -81,6 +81,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CMatrix.cpp" />
+    <ClCompile Include="LibGraph.cpp" />
+    <ClCompile Include="LibPyramid.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +92,7 @@
     <ClInclude Include="LibGraph.h" />
     <ClInclude Include="LibPyramid.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Lab06.rc" />
