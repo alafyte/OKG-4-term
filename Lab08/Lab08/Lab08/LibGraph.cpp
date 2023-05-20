@@ -18,7 +18,7 @@ void CPlot2D::SetPenLine(CMyPen& PLine)
 
 void CPlot2D::DrawBezier(CDC& dc, int NT)
 // Рисует кривую Безье по набору опорных точек
-// Массив опорных точек: [X(0),Y(0)], [X(1),Y(1)],...
+// dc - ссылка на класс CDC MFC
 // NT - число отрезков по параметру t
 {
 	double xs, ys;  // мировые  координаты точки
@@ -33,7 +33,7 @@ void CPlot2D::DrawBezier(CDC& dc, int NT)
 	dc.MoveTo(xw, yw);
 	for (int k = 1; k <= NT; k++)
 	{
-		double t = k*dt;
+		double t = k * dt;
 		for (int i = 0; i < N; i++)
 		{
 			RX(i) = X(i);
@@ -43,12 +43,70 @@ void CPlot2D::DrawBezier(CDC& dc, int NT)
 		{
 			for (int i = 0; i < j; i++)
 			{
-				RX(i) = RX(i) + t*(RX(i + 1) - RX(i));
-				RY(i) = RY(i) + t*(RY(i + 1) - RY(i));
+				RX(i) = RX(i) + t * (RX(i + 1) - RX(i));
+				RY(i) = RY(i) + t * (RY(i + 1) - RY(i));
 			}
 		}
 		xs = RX(0);   ys = RY(0);
 		GetWindowCoords(xs, ys, xw, yw);
+		dc.LineTo(xw, yw);
+	}
+	dc.SelectObject(pOldPen);
+}
+
+
+
+
+double Lagr(CMatrix& X, CMatrix& Y, double x, int size)
+{
+	double lagrange_pol = 0;
+	double basics_pol;
+
+	for (int i = 0; i < size; i++)
+	{
+		basics_pol = 1;
+		for (int j = 0; j < size; j++)
+		{
+			if (j == i)
+				continue;
+			basics_pol *= (x - X(j)) / (X(i) - X(j));
+		}
+		lagrange_pol += basics_pol * Y(i);
+	}
+	return lagrange_pol;
+}
+
+
+
+
+void CPlot2D::DrawLagr(CDC& dc)
+{
+	double dx = pi / 4;
+	double xL = 0;
+	double xH = pi;
+	int N = (xH - xL) / dx;
+	dx = 0.1;
+	int NL = (xH - xL) / dx;
+	CMatrix XL(NL + 1);
+	CMatrix YL(NL + 1);
+
+	for (int i = 0; i <= NL; i++)
+	{
+		XL(i) = xL + i * dx;
+		YL(i) = Lagr(X, Y, XL(i), N + 1);
+	}
+
+	double xs, ys;
+	int xw, yw;
+	xs = XL(0); ys = YL(0);
+	GetWindowCoords(xs, ys, xw, yw);			// координаты начальной точки графика в ОСК
+	CPen MyPen(PenLine.PenStyle, PenLine.PenWidth, PenLine.PenColor);
+	CPen* pOldPen = dc.SelectObject(&MyPen);
+	dc.MoveTo(xw, yw);							// Перо в начальную точка для рисования графика
+	for (int i = 1; i < XL.rows(); i++)
+	{
+		xs = XL(i); ys = YL(i);
+		GetWindowCoords(xs, ys, xw, yw);		// координаты начальной точки графика с номером i в ОСК
 		dc.LineTo(xw, yw);
 	}
 	dc.SelectObject(pOldPen);
@@ -66,7 +124,7 @@ void CPlot2D::GetWindowCoords(double xs, double ys, int &xw, int &yw)
 	V(2) = 1;
 	V(0) = xs;
 	V(1) = ys;
-	W = K*V;
+	W = K * V;
 	xw = (int)W(0);
 	yw = (int)W(1);
 }
@@ -81,6 +139,7 @@ void CPlot2D::SetPenAxis(CMyPen& PAxis)
 
 void CPlot2D::Draw(CDC& dc, int Ind1, int Ind2)
 // Рисует график в режиме MM_TEXT - собственный пересчет координат
+// dc - ссылка на класс CDC MFC
 // Ind1=1/0 - рисовать/не рисовать рамку
 // Ind2=1/0 - рисовать/не рисовать оси координат
 {
@@ -165,8 +224,8 @@ CMatrix SpaceToWindow(CRectD& RS, CRect& RW)
 	double ky = (double)dwy / dsy;   // Масштаб по y
 
 
-	M(0, 0) = kx;  M(0, 1) = 0;    M(0, 2) = (double)RW.left - kx*RS.left;			// Обновлено
-	M(1, 0) = 0;   M(1, 1) = -ky;  M(1, 2) = (double)RW.bottom + ky*RS.bottom;		// Обновлено
+	M(0, 0) = kx;  M(0, 1) = 0;    M(0, 2) = (double)RW.left - kx * RS.left;			// Обновлено
+	M(1, 0) = 0;   M(1, 1) = -ky;  M(1, 2) = (double)RW.bottom + ky * RS.bottom;		// Обновлено
 	M(2, 0) = 0;   M(2, 1) = 0;    M(2, 2) = 1;
 	return M;
 }

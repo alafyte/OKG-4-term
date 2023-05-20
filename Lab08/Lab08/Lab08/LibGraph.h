@@ -38,7 +38,7 @@ class CPlot2D
 	CMyPen PenLine;   // Перо для линий
 	CMyPen PenAxis;   // Перо для осей
 public:
-	
+
 	CPlot2D() { K.RedimMatrix(3, 3); };
 	void SetParams(CMatrix& XX, CMatrix& YY, CRect& RWX);
 	void GetWindowCoords(double xs, double ys, int &xw, int &yw);
@@ -46,4 +46,5 @@ public:
 	void SetPenAxis(CMyPen& PAxis);	// Перо для осей координат
 	void Draw(CDC& dc, int Ind1, int Int2);		// Рисование с самостоятельным пересчетом координат
 	void DrawBezier(CDC& dc, int NT);
-}; 
+	void DrawLagr(CDC& dc);
+};

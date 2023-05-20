@@ -1,36 +1,36 @@
-#include "stdafx.h"
+п»ї#include "stdafx.h"
 //#include "CMatrix.h"
 
 CMatrix::CMatrix()
 {
 	n_rows = 1;
 	n_cols = 1;
-	array = new double* [n_rows];
+	array = new double*[n_rows];
 	for (int i = 0; i < n_rows; i++) array[i] = new double[n_cols];
 	for (int i = 0; i < n_rows; i++)
 		for (int j = 0; j < n_cols; j++) array[i][j] = 0;
 }
 
 //-------------------------------------------------------------------------------
-CMatrix::CMatrix(int Nrow = 1, int Ncol = 1)
-// Nrow - число строк
-// Ncol - число столбцов
+CMatrix::CMatrix(int Nrow, int Ncol)
+// Nrow - С‡РёСЃР»Рѕ СЃС‚СЂРѕРє
+// Ncol - С‡РёСЃР»Рѕ СЃС‚РѕР»Р±С†РѕРІ
 {
 	n_rows = Nrow;
 	n_cols = Ncol;
-	array = new double* [n_rows];
+	array = new double*[n_rows];
 	for (int i = 0; i < n_rows; i++) array[i] = new double[n_cols];
 	for (int i = 0; i < n_rows; i++)
 		for (int j = 0; j < n_cols; j++) array[i][j] = 0;
 }
 
 //---------------------------------------------------------------------------------
-CMatrix::CMatrix(int Nrow)  //Вектор
-// Nrow - число строк
+CMatrix::CMatrix(int Nrow)  //Р’РµРєС‚РѕСЂ
+// Nrow - С‡РёСЃР»Рѕ СЃС‚СЂРѕРє
 {
 	n_rows = Nrow;
 	n_cols = 1;
-	array = new double* [n_rows];
+	array = new double*[n_rows];
 	for (int i = 0; i < n_rows; i++) array[i] = new double[n_cols];
 	for (int i = 0; i < n_rows; i++)
 		for (int j = 0; j < n_cols; j++) array[i][j] = 0;
@@ -43,329 +43,329 @@ CMatrix::~CMatrix()
 }
 
 //---------------------------------------------------------------------------------
-double& CMatrix::operator()(int i, int j)
-// i - номер строки
-// j - номер столбца
+double &CMatrix::operator()(int i, int j)
+// i - РЅРѕРјРµСЂ СЃС‚СЂРѕРєРё
+// j - РЅРѕРјРµСЂ СЃС‚РѕР»Р±С†Р°
 {
-	if ((i > n_rows - 1) || (j > n_cols - 1))     //  проверка выхода за диапазон
+	if ((i > n_rows - 1) || (j > n_cols - 1))     //  РїСЂРѕРІРµСЂРєР° РІС‹С…РѕРґР° Р·Р° РґРёР°РїР°Р·РѕРЅ
 	{
-		TCHAR* error = _T("CMatrix::operator(int,int): выход индекса за границу диапазона ");
-		MessageBox(NULL, error, _T("Ошибка"), MB_ICONSTOP);
+		TCHAR* error = _T("CMatrix::operator(int,int): РІС‹С…РѕРґ РёРЅРґРµРєСЃР° Р·Р° РіСЂР°РЅРёС†Сѓ РґРёР°РїР°Р·РѕРЅР° ");
+		MessageBox(NULL, error, _T("РћС€РёР±РєР°"), MB_ICONSTOP);
 		exit(1);
 	}
 	return array[i][j];
 }
 
 //---------------------------------------------------------------------------------
-double& CMatrix::operator()(int i)
-// i - номер строки для вектора
+double &CMatrix::operator()(int i)
+// i - РЅРѕРјРµСЂ СЃС‚СЂРѕРєРё РґР»СЏ РІРµРєС‚РѕСЂР°
 {
-	if (n_cols > 1)     //  Число столбцов больше одного
+	if (n_cols > 1)     //  Р§РёСЃР»Рѕ СЃС‚РѕР»Р±С†РѕРІ Р±РѕР»СЊС€Рµ РѕРґРЅРѕРіРѕ
 	{
-		char* error = "CMatrix::operator(int): объект не вектор - число столбцов больше 1 ";
-		MessageBox(NULL, error, "Ошибка", MB_ICONSTOP);
+		char* error = "CMatrix::operator(int): РѕР±СЉРµРєС‚ РЅРµ РІРµРєС‚РѕСЂ - С‡РёСЃР»Рѕ СЃС‚РѕР»Р±С†РѕРІ Р±РѕР»СЊС€Рµ 1 ";
+		//MessageBox(NULL, error, "РћС€РёР±РєР°", MB_ICONSTOP);
 		exit(1);
 	}
-	if (i > n_rows - 1)     //  проверка выхода за диапазон
+	if (i > n_rows - 1)     //  РїСЂРѕРІРµСЂРєР° РІС‹С…РѕРґР° Р·Р° РґРёР°РїР°Р·РѕРЅ
 	{
-		TCHAR* error = TEXT("CMatrix::operator(int): выход индекса за границу диапазона ");
-		MessageBox(NULL, error, TEXT("Ошибка"), MB_ICONSTOP);
+		TCHAR* error = TEXT("CMatrix::operator(int): РІС‹С…РѕРґ РёРЅРґРµРєСЃР° Р·Р° РіСЂР°РЅРёС†Сѓ РґРёР°РїР°Р·РѕРЅР° ");
+		MessageBox(NULL, error, TEXT("РћС€РёР±РєР°"), MB_ICONSTOP);
 		exit(1);
 	}
 	return array[i][0];
 }
 //---------------------------------------------------------------------------------
 CMatrix CMatrix::operator-()
-// Оператор -M
+// РћРїРµСЂР°С‚РѕСЂ -M
 {
-	CMatrix Temp(n_rows,n_cols);
-  for(int i=0;i<n_rows;i++)
-	for(int j=0;j<n_cols;j++) Temp(i,j)=-array[i][j];
-  return Temp;
+	CMatrix Temp(n_rows, n_cols);
+	for (int i = 0; i < n_rows; i++)
+		for (int j = 0; j < n_cols; j++) Temp(i, j) = -array[i][j];
+	return Temp;
 }
 
 //---------------------------------------------------------------------------------
 CMatrix CMatrix::operator+(CMatrix& M)
-// Оператор M1+M2
-{	
-	int bb=(n_rows==M.rows())&&(n_cols==M.cols());
-	if(!bb)
-	{ 
-		char* error="CMatrix::operator(+): несоответствие размерностей матриц ";
-		MessageBox(NULL,error,"Ошибка",MB_ICONSTOP);
-    exit(1);
+// РћРїРµСЂР°С‚РѕСЂ M1+M2
+{
+	int bb = (n_rows == M.rows()) && (n_cols == M.cols());
+	if (!bb)
+	{
+		char* error = "CMatrix::operator(+): РЅРµСЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ СЂР°Р·РјРµСЂРЅРѕСЃС‚РµР№ РјР°С‚СЂРёС† ";
+		//MessageBox(NULL, error, "РћС€РёР±РєР°", MB_ICONSTOP);
+		exit(1);
 	}
 	CMatrix Temp(*this);
-  for(int i=0;i<n_rows;i++)
-	for(int j=0;j<n_cols;j++) Temp(i,j)+=M(i,j);
-  return Temp;
+	for (int i = 0; i < n_rows; i++)
+		for (int j = 0; j < n_cols; j++) Temp(i, j) += M(i, j);
+	return Temp;
 }
 
 //---------------------------------------------------------------------------------
 CMatrix CMatrix::operator-(CMatrix& M)
-// Оператор M1-M2
-{	
-	int bb=(n_rows==M.rows())&&(n_cols==M.cols());
-	if(!bb)
-	{ 
-		char* error="CMatrix::operator(-): несоответствие размерностей матриц ";
-		MessageBox(NULL,error,"Ошибка",MB_ICONSTOP);
-    exit(1);
+// РћРїРµСЂР°С‚РѕСЂ M1-M2
+{
+	int bb = (n_rows == M.rows()) && (n_cols == M.cols());
+	if (!bb)
+	{
+		char* error = "CMatrix::operator(-): РЅРµСЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ СЂР°Р·РјРµСЂРЅРѕСЃС‚РµР№ РјР°С‚СЂРёС† ";
+		//MessageBox(NULL, error, "РћС€РёР±РєР°", MB_ICONSTOP);
+		exit(1);
 	}
 	CMatrix Temp(*this);
-	for(int i=0;i<n_rows;i++)
-	for(int j=0;j<n_cols;j++) Temp(i,j)-=M(i,j);
-  return Temp;
+	for (int i = 0; i < n_rows; i++)
+		for (int j = 0; j < n_cols; j++) Temp(i, j) -= M(i, j);
+	return Temp;
 }
 //---------------------------------------------------------------------------------
 CMatrix CMatrix::operator*(CMatrix& M)
-// Умножение на матрицу M
+// РЈРјРЅРѕР¶РµРЅРёРµ РЅР° РјР°С‚СЂРёС†Сѓ M
 {
-double sum;
-int nn=M.rows();
-int mm=M.cols();
-CMatrix Temp(n_rows,mm);
-if (n_cols==nn)
-  {
-   for (int i=0;i<n_rows;i++)
-        for (int j=0;j<mm;j++)
-          {
-          sum=0;
-          for (int k=0;k<n_cols;k++) sum+=(*this)(i,k)*M(k,j);
-          Temp(i,j)=sum;
-          }
-  }
-else
- {
-   TCHAR* error=TEXT("CMatrix::operator*: несоответствие размерностей матриц ");
-   MessageBox(NULL,error,TEXT("Ошибка"),MB_ICONSTOP);
-   exit(1);
-  }
-return Temp;
+	double sum;
+	int nn = M.rows();
+	int mm = M.cols();
+	CMatrix Temp(n_rows, mm);
+	if (n_cols == nn)
+	{
+		for (int i = 0; i < n_rows; i++)
+			for (int j = 0; j < mm; j++)
+			{
+				sum = 0;
+				for (int k = 0; k < n_cols; k++) sum += (*this)(i, k)*M(k, j);
+				Temp(i, j) = sum;
+			}
+	}
+	else
+	{
+		TCHAR* error = TEXT("CMatrix::operator*: РЅРµСЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ СЂР°Р·РјРµСЂРЅРѕСЃС‚РµР№ РјР°С‚СЂРёС† ");
+		MessageBox(NULL, error, TEXT("РћС€РёР±РєР°"), MB_ICONSTOP);
+		exit(1);
+	}
+	return Temp;
 }
 
 //---------------------------------------------------------------------------------
 CMatrix CMatrix::operator=(const CMatrix& M)
-// Оператор присваивания M1=M
+// РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ M1=M
 {
-if (this==&M) return *this;
-int nn=M.rows();
-int mm=M.cols();
-if ((n_rows==nn)&&(n_cols==mm))
- {
-for (int i=0;i<n_rows;i++)
-     for (int j=0;j<n_cols;j++) array[i][j]=M.array[i][j];
- }
-else   // для ошибки размерностей
-  {
-   TCHAR* error=TEXT("CMatrix::operator=: несоответствие размерностей матриц");
-   MessageBox(NULL,error,TEXT("Ошибка"),MB_ICONSTOP);
-   exit(1);
-  }
-return *this;
+	if (this == &M) return *this;
+	int nn = M.rows();
+	int mm = M.cols();
+	if ((n_rows == nn) && (n_cols == mm))
+	{
+		for (int i = 0; i < n_rows; i++)
+			for (int j = 0; j < n_cols; j++) array[i][j] = M.array[i][j];
+	}
+	else   // РґР»СЏ РѕС€РёР±РєРё СЂР°Р·РјРµСЂРЅРѕСЃС‚РµР№
+	{
+		TCHAR* error = TEXT("CMatrix::operator=: РЅРµСЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ СЂР°Р·РјРµСЂРЅРѕСЃС‚РµР№ РјР°С‚СЂРёС†");
+		MessageBox(NULL, error, TEXT("РћС€РёР±РєР°"), MB_ICONSTOP);
+		exit(1);
+	}
+	return *this;
 }
 
 //---------------------------------------------------------------------------------
-CMatrix::CMatrix(const CMatrix &M) // Конструктор копирования
+CMatrix::CMatrix(const CMatrix &M) // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
 {
-	n_rows=M.n_rows;
-	n_cols=M.n_cols;
-	array=new double*[n_rows];
-	for(int i=0;i<n_rows;i++) array[i]=new double[n_cols];
-	for(int i=0;i<n_rows;i++)
-    for(int j=0;j<n_cols;j++) array[i][j]=M.array[i][j];
+	n_rows = M.n_rows;
+	n_cols = M.n_cols;
+	array = new double*[n_rows];
+	for (int i = 0; i < n_rows; i++) array[i] = new double[n_cols];
+	for (int i = 0; i < n_rows; i++)
+		for (int j = 0; j < n_cols; j++) array[i][j] = M.array[i][j];
 }
 
 //---------------------------------------------------------------------------------
 CMatrix CMatrix::operator+(double x)
-// Оператор M+x, где M - матрица, x - число
+// РћРїРµСЂР°С‚РѕСЂ M+x, РіРґРµ M - РјР°С‚СЂРёС†Р°, x - С‡РёСЃР»Рѕ
 {
-  CMatrix Temp(*this);
-  for(int i=0;i<n_rows;i++)
-	for(int j=0;j<n_cols;j++) Temp(i,j)+=x;
-  return Temp;
+	CMatrix Temp(*this);
+	for (int i = 0; i < n_rows; i++)
+		for (int j = 0; j < n_cols; j++) Temp(i, j) += x;
+	return Temp;
 }
 //---------------------------------------------------------------------------------
 CMatrix CMatrix::operator*(double x)
-// Оператор M*x, где M - матрица, x - число
+// РћРїРµСЂР°С‚РѕСЂ M*x, РіРґРµ M - РјР°С‚СЂРёС†Р°, x - С‡РёСЃР»Рѕ
 {
 	CMatrix Temp(*this);
-	for (int i = 0; i<n_rows; i++)
-		for (int j = 0; j<n_cols; j++) Temp(i, j) *= x;
+	for (int i = 0; i < n_rows; i++)
+		for (int j = 0; j < n_cols; j++) Temp(i, j) *= x;
 	return Temp;
 }
 
 //---------------------------------------------------------------------------------
 CMatrix CMatrix::operator-(double x)
-// Оператор M+x, где M - матрица, x - число
+// РћРїРµСЂР°С‚РѕСЂ M+x, РіРґРµ M - РјР°С‚СЂРёС†Р°, x - С‡РёСЃР»Рѕ
 {
-  CMatrix Temp(*this);
-  for(int i=0;i<n_rows;i++)
-	for(int j=0;j<n_cols;j++) Temp(i,j)-=x;
-  return Temp;
+	CMatrix Temp(*this);
+	for (int i = 0; i < n_rows; i++)
+		for (int j = 0; j < n_cols; j++) Temp(i, j) -= x;
+	return Temp;
 }
 
 
 
 //---------------------------------------------------------------------------------
 CMatrix CMatrix::Transp()
-// Возвращает матрицу,транспонированную к (*this)
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ РјР°С‚СЂРёС†Сѓ,С‚СЂР°РЅСЃРїРѕРЅРёСЂРѕРІР°РЅРЅСѓСЋ Рє (*this)
 {
-  CMatrix Temp(n_cols,n_rows);
-  for (int i=0;i<n_cols;i++)
-     for (int j=0;j<n_rows;j++) Temp(i,j)=array[j][i];
-  return Temp;
+	CMatrix Temp(n_cols, n_rows);
+	for (int i = 0; i < n_cols; i++)
+		for (int j = 0; j < n_rows; j++) Temp(i, j) = array[j][i];
+	return Temp;
 }
 
 //---------------------------------------------------------------------------------
-CMatrix CMatrix::GetRow(int k)	
-// Возвращает строку матрицы по номеру k
+CMatrix CMatrix::GetRow(int k)
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃС‚СЂРѕРєСѓ РјР°С‚СЂРёС†С‹ РїРѕ РЅРѕРјРµСЂСѓ k
 {
-	if(k>n_rows-1)
+	if (k > n_rows - 1)
 	{
-		char* error="CMatrix::GetRow(int k): параметр k превышает число строк ";
-		MessageBox(NULL,error,"Ошибка",MB_ICONSTOP);
-    exit(1);
+		char* error = "CMatrix::GetRow(int k): РїР°СЂР°РјРµС‚СЂ k РїСЂРµРІС‹С€Р°РµС‚ С‡РёСЃР»Рѕ СЃС‚СЂРѕРє ";
+		//MessageBox(NULL, error, "РћС€РёР±РєР°", MB_ICONSTOP);
+		exit(1);
 	}
-	CMatrix M(1,n_cols);
-	for(int i=0;i<n_cols;i++)M(0,i)=(*this)(k,i);
+	CMatrix M(1, n_cols);
+	for (int i = 0; i < n_cols; i++)M(0, i) = (*this)(k, i);
 	return M;
 }
 //---------------------------------------------------------------------------------
-CMatrix CMatrix::GetRow(int k,int n,int m)	
-// Возвращает подстроку из строки матрицы с номером k
-// n - номер первого элемента в строке
-// m - номер последнего элемента в строке
+CMatrix CMatrix::GetRow(int k, int n, int m)
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ РїРѕРґСЃС‚СЂРѕРєСѓ РёР· СЃС‚СЂРѕРєРё РјР°С‚СЂРёС†С‹ СЃ РЅРѕРјРµСЂРѕРј k
+// n - РЅРѕРјРµСЂ РїРµСЂРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РІ СЃС‚СЂРѕРєРµ
+// m - РЅРѕРјРµСЂ РїРѕСЃР»РµРґРЅРµРіРѕ СЌР»РµРјРµРЅС‚Р° РІ СЃС‚СЂРѕРєРµ
 {
-	int b1=(k>=0)&&(k<n_rows);
-	int b2=(n>=0)&&(n<=m);
-	int b3=(m>=0)&&(m<n_cols);
-	int b4=b1&&b2&&b3;
-	if(!b4)
+	int b1 = (k >= 0) && (k < n_rows);
+	int b2 = (n >= 0) && (n <= m);
+	int b3 = (m >= 0) && (m < n_cols);
+	int b4 = b1 && b2&&b3;
+	if (!b4)
 	{
-		char* error="CMatrix::GetRow(int k,int n, int m):ошибка в параметрах ";
-		MessageBox(NULL,error,"Ошибка",MB_ICONSTOP);
-    exit(1);
+		char* error = "CMatrix::GetRow(int k,int n, int m):РѕС€РёР±РєР° РІ РїР°СЂР°РјРµС‚СЂР°С… ";
+		//MessageBox(NULL, error, "РћС€РёР±РєР°", MB_ICONSTOP);
+		exit(1);
 	}
-	int nCols=m-n+1;
-	CMatrix M(1,nCols);
-	for(int i=n;i<=m;i++)M(0,i-n)=(*this)(k,i);
+	int nCols = m - n + 1;
+	CMatrix M(1, nCols);
+	for (int i = n; i <= m; i++)M(0, i - n) = (*this)(k, i);
 	return M;
 }
 
 //---------------------------------------------------------------------------------
-CMatrix CMatrix::GetCol(int k)	
-// Возвращает столбец матрицы по номеру k
+CMatrix CMatrix::GetCol(int k)
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃС‚РѕР»Р±РµС† РјР°С‚СЂРёС†С‹ РїРѕ РЅРѕРјРµСЂСѓ k
 {
-	if(k>n_cols-1)
+	if (k > n_cols - 1)
 	{
-		char* error="CMatrix::GetCol(int k): параметр k превышает число столбцов ";
-		MessageBox(NULL,error,"Ошибка",MB_ICONSTOP);
-    exit(1);
+		char* error = "CMatrix::GetCol(int k): РїР°СЂР°РјРµС‚СЂ k РїСЂРµРІС‹С€Р°РµС‚ С‡РёСЃР»Рѕ СЃС‚РѕР»Р±С†РѕРІ ";
+		//MessageBox(NULL, error, "РћС€РёР±РєР°", MB_ICONSTOP);
+		exit(1);
 	}
-	CMatrix M(n_rows,1);
-	for(int i=0;i<n_rows;i++)M(i,0)=(*this)(i,k);
+	CMatrix M(n_rows, 1);
+	for (int i = 0; i < n_rows; i++)M(i, 0) = (*this)(i, k);
 	return M;
 }
 //---------------------------------------------------------------------------------
-CMatrix CMatrix::GetCol(int k,int n, int m)
-// Возвращает подстолбец из столбца матрицы с номером k
-// n - номер первого элемента в столбце
-// m - номер последнего элемента в столбце
+CMatrix CMatrix::GetCol(int k, int n, int m)
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ РїРѕРґСЃС‚РѕР»Р±РµС† РёР· СЃС‚РѕР»Р±С†Р° РјР°С‚СЂРёС†С‹ СЃ РЅРѕРјРµСЂРѕРј k
+// n - РЅРѕРјРµСЂ РїРµСЂРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РІ СЃС‚РѕР»Р±С†Рµ
+// m - РЅРѕРјРµСЂ РїРѕСЃР»РµРґРЅРµРіРѕ СЌР»РµРјРµРЅС‚Р° РІ СЃС‚РѕР»Р±С†Рµ
 {
-	int b1=(k>=0)&&(k<n_cols);
-	int b2=(n>=0)&&(n<=m);
-	int b3=(m>=0)&&(m<n_rows);
-	int b4=b1&&b2&&b3;
-	if(!b4)
+	int b1 = (k >= 0) && (k < n_cols);
+	int b2 = (n >= 0) && (n <= m);
+	int b3 = (m >= 0) && (m < n_rows);
+	int b4 = b1 && b2&&b3;
+	if (!b4)
 	{
-		char* error="CMatrix::GetCol(int k,int n, int m):ошибка в параметрах ";
-		MessageBox(NULL,error,"Ошибка",MB_ICONSTOP);
-    exit(1);
+		char* error = "CMatrix::GetCol(int k,int n, int m):РѕС€РёР±РєР° РІ РїР°СЂР°РјРµС‚СЂР°С… ";
+		//MessageBox(NULL, error, "РћС€РёР±РєР°", MB_ICONSTOP);
+		exit(1);
 	}
-	int nRows=m-n+1;
-	CMatrix M(nRows,1);
-	for(int i=n;i<=m;i++)M(i-n,0)=(*this)(i,k);
+	int nRows = m - n + 1;
+	CMatrix M(nRows, 1);
+	for (int i = n; i <= m; i++)M(i - n, 0) = (*this)(i, k);
 	return M;
 }
 //---------------------------------------------------------------------------------
-CMatrix CMatrix::RedimMatrix(int NewRow,int NewCol)
-// Изменяет размер матрицы с уничтожением данных
-// NewRow - новое число строк
-// NewCol - новое число столбцов 
+CMatrix CMatrix::RedimMatrix(int NewRow, int NewCol)
+// РР·РјРµРЅСЏРµС‚ СЂР°Р·РјРµСЂ РјР°С‚СЂРёС†С‹ СЃ СѓРЅРёС‡С‚РѕР¶РµРЅРёРµРј РґР°РЅРЅС‹С…
+// NewRow - РЅРѕРІРѕРµ С‡РёСЃР»Рѕ СЃС‚СЂРѕРє
+// NewCol - РЅРѕРІРѕРµ С‡РёСЃР»Рѕ СЃС‚РѕР»Р±С†РѕРІ 
 {
-	for(int i=0;i<n_rows;i++) delete array[i];
+	for (int i = 0; i < n_rows; i++) delete array[i];
 	delete array;
-	n_rows=NewRow;
-	n_cols=NewCol;
-	array=new double*[n_rows];
-	for(int i=0;i<n_rows;i++) array[i]=new double[n_cols];
-	for(int i=0;i<n_rows;i++)
-		for(int j=0;j<n_cols;j++) array[i][j]=0;
+	n_rows = NewRow;
+	n_cols = NewCol;
+	array = new double*[n_rows];
+	for (int i = 0; i < n_rows; i++) array[i] = new double[n_cols];
+	for (int i = 0; i < n_rows; i++)
+		for (int j = 0; j < n_cols; j++) array[i][j] = 0;
 	return (*this);
 }
 
 //---------------------------------------------------------------------------------
-CMatrix CMatrix::RedimData(int NewRow,int NewCol)
-// Изменяет размер матрицы с сохранением данных, которые можно сохранить
-// NewRow - новое число строк
-// NewCol - новое число столбцов 
+CMatrix CMatrix::RedimData(int NewRow, int NewCol)
+// РР·РјРµРЅСЏРµС‚ СЂР°Р·РјРµСЂ РјР°С‚СЂРёС†С‹ СЃ СЃРѕС…СЂР°РЅРµРЅРёРµРј РґР°РЅРЅС‹С…, РєРѕС‚РѕСЂС‹Рµ РјРѕР¶РЅРѕ СЃРѕС…СЂР°РЅРёС‚СЊ
+// NewRow - РЅРѕРІРѕРµ С‡РёСЃР»Рѕ СЃС‚СЂРѕРє
+// NewCol - РЅРѕРІРѕРµ С‡РёСЃР»Рѕ СЃС‚РѕР»Р±С†РѕРІ 
 {
-	CMatrix Temp=(*this);
-	this->RedimMatrix(NewRow,NewCol);
-	int min_rows=Temp.rows()<(*this).rows()?Temp.rows():(*this).rows();
-	int min_cols=Temp.cols()<(*this).cols()?Temp.cols():(*this).cols();
-	for(int i=0;i<min_rows;i++)
-		for(int j=0;j<min_cols;j++) (*this)(i,j)=Temp(i,j);
+	CMatrix Temp = (*this);
+	this->RedimMatrix(NewRow, NewCol);
+	int min_rows = Temp.rows() < (*this).rows() ? Temp.rows() : (*this).rows();
+	int min_cols = Temp.cols() < (*this).cols() ? Temp.cols() : (*this).cols();
+	for (int i = 0; i < min_rows; i++)
+		for (int j = 0; j < min_cols; j++) (*this)(i, j) = Temp(i, j);
 	return (*this);
 }
 
 
 //---------------------------------------------------------------------------------
 CMatrix CMatrix::RedimMatrix(int NewRow)
-// Изменяет размер матрицы с уничтожением данных
-// NewRow - новое число строк
+// РР·РјРµРЅСЏРµС‚ СЂР°Р·РјРµСЂ РјР°С‚СЂРёС†С‹ СЃ СѓРЅРёС‡С‚РѕР¶РµРЅРёРµРј РґР°РЅРЅС‹С…
+// NewRow - РЅРѕРІРѕРµ С‡РёСЃР»Рѕ СЃС‚СЂРѕРє
 // NewCol=1
 {
-	for(int i=0;i<n_rows;i++) delete array[i];
+	for (int i = 0; i < n_rows; i++) delete array[i];
 	delete array;
-	n_rows=NewRow;
-	n_cols=1;
-	array=new double*[n_rows];
-	for(int i=0;i<n_rows;i++) array[i]=new double[n_cols];
-	for(int i=0;i<n_rows;i++)
-		for(int j=0;j<n_cols;j++) array[i][j]=0;
+	n_rows = NewRow;
+	n_cols = 1;
+	array = new double*[n_rows];
+	for (int i = 0; i < n_rows; i++) array[i] = new double[n_cols];
+	for (int i = 0; i < n_rows; i++)
+		for (int j = 0; j < n_cols; j++) array[i][j] = 0;
 	return (*this);
 }
 
 //---------------------------------------------------------------------------------
 CMatrix CMatrix::RedimData(int NewRow)
-// Изменяет размер матрицы с сохранением данных, которые можно сохранить
-// NewRow - новое число строк
+// РР·РјРµРЅСЏРµС‚ СЂР°Р·РјРµСЂ РјР°С‚СЂРёС†С‹ СЃ СЃРѕС…СЂР°РЅРµРЅРёРµРј РґР°РЅРЅС‹С…, РєРѕС‚РѕСЂС‹Рµ РјРѕР¶РЅРѕ СЃРѕС…СЂР°РЅРёС‚СЊ
+// NewRow - РЅРѕРІРѕРµ С‡РёСЃР»Рѕ СЃС‚СЂРѕРє
 // NewCol=1
 {
-	CMatrix Temp=(*this);
+	CMatrix Temp = (*this);
 	this->RedimMatrix(NewRow);
-	int min_rows=Temp.rows()<(*this).rows()?Temp.rows():(*this).rows();	
-	for(int i=0;i<min_rows;i++)(*this)(i)=Temp(i);	
+	int min_rows = Temp.rows() < (*this).rows() ? Temp.rows() : (*this).rows();
+	for (int i = 0; i < min_rows; i++)(*this)(i) = Temp(i);
 	return (*this);
 }
 //----------------------------------------------------------------------------------
 double CMatrix::MaxElement()
-// Максимальное значение элементов матрицы
+// РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ СЌР»РµРјРµРЅС‚РѕРІ РјР°С‚СЂРёС†С‹
 {
-	double max=(*this)(0,0);
-	for(int i=0;i<(this->rows());i++)
-	  for(int j=0;j<(this->cols());j++) if ((*this)(i,j)>max) max=(*this)(i,j);
+	double max = (*this)(0, 0);
+	for (int i = 0; i < (this->rows()); i++)
+		for (int j = 0; j < (this->cols()); j++) if ((*this)(i, j) > max) max = (*this)(i, j);
 	return max;
 }
 
 //----------------------------------------------------------------------------------
 double CMatrix::MinElement()
-// Минимальное значение элементов матрицы
+// РњРёРЅРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ СЌР»РµРјРµРЅС‚РѕРІ РјР°С‚СЂРёС†С‹
 {
-	double min=(*this)(0,0);
-	for(int i=0;i<(this->rows());i++)
-	  for(int j=0;j<(this->cols());j++) if ((*this)(i,j)<min) min=(*this)(i,j);
+	double min = (*this)(0, 0);
+	for (int i = 0; i < (this->rows()); i++)
+		for (int j = 0; j < (this->cols()); j++) if ((*this)(i, j) < min) min = (*this)(i, j);
 	return min;
 }
