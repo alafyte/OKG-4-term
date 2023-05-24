@@ -96,6 +96,7 @@ void CPlot2D::DrawLagr(CDC& dc)
 		YL(i) = Lagr(X, Y, XL(i), N + 1);
 	}
 
+	SetParams(XL, YL, RW);
 	double xs, ys;
 	int xw, yw;
 	xs = XL(0); ys = YL(0);
@@ -145,12 +146,13 @@ void CPlot2D::Draw(CDC& dc, int Ind1, int Ind2)
 {
 	double xs, ys;  // мировые  координаты точки
 	int xw, yw;     // оконные координаты точки
-	if (Ind1 == 1)dc.Rectangle(RW);								 // Рамка в окне
+	if (Ind1 == 1)
+		dc.Rectangle(RW);								 // Рамка в окне
 	if (Ind2 == 1)	// Если нужны оси...
 	{//***
 		CPen MyPen(PenAxis.PenStyle, PenAxis.PenWidth, PenAxis.PenColor);
 		CPen* pOldPen = dc.SelectObject(&MyPen);
-		if (RS.left*RS.right < 0)							// Нужна Ось Y
+		if (RS.left * RS.right < 0)							// Нужна Ось Y
 		{
 			xs = 0;  ys = RS.top;           // Точка (0,y_max) в МСК
 			GetWindowCoords(xs, ys, xw, yw); // (xw,yw) -точка (0,y_max) в ОСК		
@@ -161,7 +163,7 @@ void CPlot2D::Draw(CDC& dc, int Ind1, int Ind2)
 			dc.LineTo(xw, yw);		      // Линия (0,y_max) - (0,y_min) - Ось Y
 		}
 
-		if (RS.top*RS.bottom < 0)							// Нужна Ось X
+		if (RS.top * RS.bottom < 0)							// Нужна Ось X
 		{
 			xs = RS.left;  ys = 0;           // (xs,ys) - точка (x_min,0) в МСК
 			GetWindowCoords(xs, ys, xw, yw); // (xw,yw) -точка (x_min,0) в ОСК
